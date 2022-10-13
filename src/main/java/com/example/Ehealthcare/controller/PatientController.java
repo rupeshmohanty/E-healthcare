@@ -10,6 +10,7 @@ import com.example.Ehealthcare.service.AppointmentService;
 import com.example.Ehealthcare.service.PatientService;
 import com.example.Ehealthcare.entity.Appointment;
 import com.example.Ehealthcare.entity.Diseases;
+import com.example.Ehealthcare.entity.Testimonials;
 
 @RestController
 @RequestMapping(value = "/patient")
@@ -29,6 +30,12 @@ public class PatientController {
     @PostMapping("/search/diseases")
     RootDto book(Diseases diseases) {
         RootDto res = patientService.getDiseaseInfo(diseases.getName());
+        return res;
+    }
+
+    @PostMapping("/testimonial")
+    RootDto book(Testimonials testimonials) {
+        RootDto res = patientService.writeTestimonial(testimonials);
         return res;
     }
 }
