@@ -7,17 +7,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Ehealthcare.dto.RootDto;
 import com.example.Ehealthcare.service.AppointmentService;
+import com.example.Ehealthcare.service.PatientService;
 import com.example.Ehealthcare.entity.Appointment;
+import com.example.Ehealthcare.entity.Diseases;
 
 @RestController
 @RequestMapping(value = "/patient")
-public class AppointmentController {
+public class PatientController {
     @Autowired
     AppointmentService appointmentService;
+
+    @Autowired
+    PatientService patientService;
 
     @PostMapping("/bookAppointment")
     RootDto book(Appointment appointment) {
         RootDto res = appointmentService.bookAppointment(appointment);
+        return res;
+    }
+
+    @PostMapping("/search/diseases")
+    RootDto book(Diseases diseases) {
+        RootDto res = patientService.getDiseaseInfo(diseases.getName());
         return res;
     }
 }
