@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import com.example.Ehealthcare.entity.Appointment;
 import com.example.Ehealthcare.entity.Diseases;
+import com.example.Ehealthcare.entity.Prescription;
 
 @Data
 @JsonInclude(Include.NON_NULL)
@@ -19,4 +20,7 @@ public class RootDto {
 
     @JsonProperty("diseaseDetails")
     private Diseases diseaseDetails;
+
+    @JsonProperty("prescription")
+    private Prescription prescription;
 }

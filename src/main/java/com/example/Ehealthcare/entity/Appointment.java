@@ -47,4 +47,7 @@ public class Appointment {
 
     @Column(name = "additionalRequests")
     private String requests;
+
+    @Column(name = "status")
+    private String status;
 }
