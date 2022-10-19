@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Ehealthcare.dto.RootDto;
 // import com.example.Ehealthcare.entity.Appointment;
 import com.example.Ehealthcare.entity.Diseases;
+import com.example.Ehealthcare.entity.Doctor;
+import com.example.Ehealthcare.entity.FAQ;
 import com.example.Ehealthcare.entity.Prescription;
 import com.example.Ehealthcare.service.AppointmentService;
 import com.example.Ehealthcare.service.DiseasesService;
@@ -47,6 +49,18 @@ public class DoctorController {
     @PostMapping("/uploadPrescription")
     RootDto rejectAppointment(Prescription prescription) {
         RootDto res = doctorService.writePrescription(prescription);
+        return res;
+    }
+
+    @PostMapping("/addFaq")
+    RootDto addFaq(FAQ faq) {
+        RootDto res = doctorService.addFaq(faq);
+        return res;
+    }
+
+    @PostMapping("/addDoctor")
+    RootDto addDoctor(Doctor doctor) {
+        RootDto res = doctorService.addDoctor(doctor);
         return res;
     }
 }
