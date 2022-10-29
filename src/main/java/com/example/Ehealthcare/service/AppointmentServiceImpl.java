@@ -1,5 +1,7 @@
 package com.example.Ehealthcare.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -93,6 +95,28 @@ public class AppointmentServiceImpl implements AppointmentService{
             res.setResponseCode("400");
             res.setResponseStatus("Failed");
             res.setResponseMessage("Unable to reject the appointment");
+            dto.setResponse(res);
+        }
+
+        return dto;
+    }
+
+    @Override
+    public RootDto allAppointments() {
+        RootDto dto = new RootDto();
+        ResponseDetailsDto res = new ResponseDetailsDto();
+        List<Appointment> appointments = appointmentDao.findAll();
+
+        if(!ObjectUtils.isEmpty(appointments)) {
+            res.setResponseCode("200");
+            res.setResponseStatus("Success");
+            res.setResponseMessage("All appointments fetched");
+            dto.setResponse(res);
+            dto.setAppointments(appointments);
+        } else {
+            res.setResponseCode("400");
+            res.setResponseStatus("Failed");
+            res.setResponseMessage("Unable to fetch all the appointments");
             dto.setResponse(res);
         }
 
