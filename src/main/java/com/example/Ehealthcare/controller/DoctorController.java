@@ -3,6 +3,7 @@ package com.example.Ehealthcare.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,18 +45,18 @@ public class DoctorController {
         return res;
     }
 
-    @PostMapping("/acceptAppointment")
-    RootDto acceptAppointment(@RequestBody long id) {
+    @GetMapping("/acceptAppointment/{id}")
+    RootDto acceptAppointment(@PathVariable("id") long id) {
         RootDto res = appointmentService.acceptAppointment(id);
         return res;
     }
 
-    @PostMapping("/rejectAppointment")
-    RootDto rejectAppointment(@RequestBody long id) {
+    @GetMapping("/rejectAppointment/{id}")
+    RootDto rejectAppointment(@PathVariable("id") long id) {
         RootDto res = appointmentService.rejectAppointment(id);
         return res;
     }
-
+    
     @PostMapping("/uploadPrescription")
     RootDto rejectAppointment(@RequestBody Prescription prescription) {
         RootDto res = doctorService.writePrescription(prescription);
