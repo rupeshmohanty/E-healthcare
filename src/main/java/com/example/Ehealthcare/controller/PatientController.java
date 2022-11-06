@@ -32,20 +32,26 @@ public class PatientController {
     }
 
     @PostMapping("/search/diseases")
-    RootDto book(@RequestBody Diseases diseases) {
+    RootDto search(@RequestBody Diseases diseases) {
         RootDto res = patientService.getDiseaseInfo(diseases.getName());
         return res;
     }
 
     @PostMapping("/testimonial")
-    RootDto book(@RequestBody Testimonials testimonials) {
+    RootDto addTestimonial(@RequestBody Testimonials testimonials) {
         RootDto res = patientService.writeTestimonial(testimonials);
         return res;
     }
 
     @PostMapping("/register")
-    RootDto book(@RequestBody Patient patient) {
+    RootDto registerUser(@RequestBody Patient patient) {
         RootDto res = patientService.registerUser(patient);
+        return res;
+    }
+
+    @PostMapping("/login")
+    RootDto loginUser(@RequestBody Patient patient) {
+        RootDto res = patientService.loginUser(patient);
         return res;
     }
 }

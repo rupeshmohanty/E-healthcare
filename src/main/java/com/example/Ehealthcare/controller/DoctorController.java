@@ -69,9 +69,15 @@ public class DoctorController {
         return res;
     }
 
-    @PostMapping("/addDoctor")
-    RootDto addDoctor(@RequestBody Doctor doctor) {
-        RootDto res = doctorService.addDoctor(doctor);
+    @PostMapping("/register")
+    RootDto registerDoctor(@RequestBody Doctor doctor) {
+        RootDto res = doctorService.registerDoctor(doctor);
+        return res;
+    }
+
+    @PostMapping("/login")
+    RootDto loginDoctor(@RequestBody Doctor doctor) {
+        RootDto res = doctorService.loginDoctor(doctor);
         return res;
     }
 }

@@ -8,4 +8,5 @@ public interface PatientService {
     RootDto getDiseaseInfo(String diseaseName);
     RootDto writeTestimonial(Testimonials testimonials);
     RootDto registerUser(Patient patient);
+    RootDto loginUser(Patient patient);
 }

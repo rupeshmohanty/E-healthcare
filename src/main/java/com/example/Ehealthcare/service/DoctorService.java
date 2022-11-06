@@ -6,7 +6,8 @@ import com.example.Ehealthcare.entity.FAQ;
 import com.example.Ehealthcare.entity.Prescription;
 
 public interface DoctorService {
-    RootDto addDoctor(Doctor doctor);
+    RootDto registerDoctor(Doctor doctor);
+    RootDto loginDoctor(Doctor doctor);
     RootDto writePrescription(Prescription prescription);
     RootDto addFaq(FAQ faq);
 }

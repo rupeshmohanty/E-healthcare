@@ -10,28 +10,34 @@ import lombok.Data;
 
 @Data
 @JsonInclude(Include.NON_NULL)
-public class PatientDetailsDto {
+public class DoctorDetailsDto {
     @JsonProperty("id")
     private long id;
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("gender")
-    private String gender;
-
-    @JsonProperty("age")
-    private String age;
-
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("address")
-    private String address;
+    @JsonProperty("department")
+    private String department;
 
-    @JsonProperty("created_on")
+    @JsonProperty("certificate")
+    private String certificate;
+
+    @JsonProperty("yoe")
+    private String yoe;
+
+    @JsonProperty("workingAt")
+    private String workingAt;
+
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("createdOn")
     private Date createdOn;
 
-    @JsonProperty("last_updatedon")
+    @JsonProperty("lastUpdatedOn")
     private Date lastUpdatedOn;
 }

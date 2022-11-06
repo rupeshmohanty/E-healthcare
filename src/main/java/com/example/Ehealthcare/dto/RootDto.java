@@ -36,4 +36,7 @@ public class RootDto {
 
     @JsonProperty("patientDetails")
     private PatientDetailsDto patientDetails;
+
+    @JsonProperty("doctorDetails")
+    private DoctorDetailsDto doctorDetails;
 }

@@ -1,9 +1,13 @@
 package com.example.Ehealthcare.service;
 
+import java.util.Base64;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.example.Ehealthcare.dto.DoctorDetailsDto;
 import com.example.Ehealthcare.dto.ResponseDetailsDto;
 import com.example.Ehealthcare.dto.RootDto;
 import com.example.Ehealthcare.entity.Doctor;
@@ -79,28 +83,87 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
-    public RootDto addDoctor(Doctor doctor) {
+    public RootDto registerDoctor(Doctor doctor) {
         RootDto dto = new RootDto();
         ResponseDetailsDto res = new ResponseDetailsDto();
-        Doctor newDoctor = new Doctor();
+        Doctor checkDoctor = doctorDao.getUser(doctor.getEmail());
 
-        newDoctor.setName(doctor.getName());
-        newDoctor.setDepartment(doctor.getDepartment());
-        newDoctor.setCertificate(doctor.getCertificate());
-        newDoctor.setWorkingAt(doctor.getWorkingAt());
-        newDoctor.setYoe(doctor.getYoe());
-        newDoctor = doctorDao.save(newDoctor);
-
-        if(!ObjectUtils.isEmpty(newDoctor)) {
-            res.setResponseCode("200");
-            res.setResponseStatus("Success");
-            res.setResponseMessage("New doctor added");
+        if(!ObjectUtils.isEmpty(checkDoctor)) {
+            res.setResponseCode("400");
+            res.setResponseStatus("Failed");
+            res.setResponseMessage("You are already registered with us");
             dto.setResponse(res);
-            dto.setDoctor(newDoctor);
+        } else {
+            Doctor newDoctor = new Doctor();
+            newDoctor.setName(doctor.getName());
+            newDoctor.setEmail(doctor.getEmail());
+            newDoctor.setDepartment(doctor.getDepartment());
+            newDoctor.setCertificate(doctor.getCertificate());
+            newDoctor.setYoe(doctor.getYoe());
+            newDoctor.setWorkingAt(doctor.getWorkingAt());
+            String encPassword = Base64.getEncoder().encodeToString(doctor.getPassword().getBytes());
+            newDoctor.setPassword(encPassword);
+            newDoctor.setStatus("Pending");
+            newDoctor.setCreatedOn(new Date());
+            
+            // save the new doctor details
+            newDoctor = doctorDao.save(newDoctor);
+
+            if(!ObjectUtils.isEmpty(newDoctor)) {
+                res.setResponseCode("200");
+                res.setResponseStatus("Success");
+                res.setResponseMessage("Doctor registered");
+                dto.setResponse(res);
+            } else {
+                res.setResponseCode("400");
+                res.setResponseStatus("Failed");
+                res.setResponseMessage("Unable to save new doctor");
+                dto.setResponse(res);
+            }
+        }
+        
+        return dto;
+    }
+
+    @Override
+    public RootDto loginDoctor(Doctor doctor) {
+        RootDto dto = new RootDto();
+        ResponseDetailsDto res = new ResponseDetailsDto();
+        Doctor doctorData = doctorDao.getUser(doctor.getEmail());
+
+        if(!ObjectUtils.isEmpty(doctorData)) {
+            // decrypting the db password
+            byte[] decodedBytes = Base64.getDecoder().decode(doctorData.getPassword());
+            String dbPassword = new String(decodedBytes);
+
+            if(doctor.getPassword().equals(dbPassword)) {
+                res.setResponseCode("200");
+                res.setResponseStatus("Success");
+                res.setResponseMessage("Logged in successfully!");
+                dto.setResponse(res);
+                DoctorDetailsDto doctorDetails = new DoctorDetailsDto();
+                doctorDetails.setId(doctorData.getId());
+                doctorDetails.setName(doctorData.getName());
+                doctorDetails.setEmail(doctorData.getEmail());
+                doctorDetails.setDepartment(doctorData.getDepartment());
+                doctorDetails.setCertificate(doctorData.getCertificate());
+                doctorDetails.setYoe(doctorData.getYoe());
+                doctorDetails.setWorkingAt(doctorData.getWorkingAt());
+                doctorDetails.setStatus(doctorData.getStatus());
+                doctorDetails.setCreatedOn(doctorData.getCreatedOn());
+                doctorDetails.setLastUpdatedOn(doctorData.getLastUpdatedOn());
+                dto.setDoctorDetails(doctorDetails);
+            } else {
+                res.setResponseCode("400");
+                res.setResponseStatus("Failed");
+                res.setResponseMessage("Password does not match");
+                dto.setResponse(res);
+            }
+
         } else {
             res.setResponseCode("400");
             res.setResponseStatus("Failed");
-            res.setResponseMessage("Unable to add new doctor");
+            res.setResponseMessage("You are not registered with us");
             dto.setResponse(res);
         }
 
