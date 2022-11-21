@@ -39,4 +39,38 @@ public class RootDto {
 
     @JsonProperty("doctorDetails")
     private DoctorDetailsDto doctorDetails;
+
+	public void setResponse(ResponseDetailsDto response) {
+		this.response = response;
+	}
+
+	public void setAppointmentDetails(Appointment appointmentDetails) {
+		this.appointmentDetails = appointmentDetails;
+	}
+
+	public void setDiseaseDetails(Diseases diseaseDetails) {
+		this.diseaseDetails = diseaseDetails;
+	}
+
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public void setPatientDetails(PatientDetailsDto patientDetails) {
+		this.patientDetails = patientDetails;
+	}
+
+	public void setDoctorDetails(DoctorDetailsDto doctorDetails) {
+		this.doctorDetails = doctorDetails;
+	}
+    
+    
 }

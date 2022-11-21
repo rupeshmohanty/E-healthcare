@@ -32,28 +32,31 @@ public class DoctorController {
 
     @Autowired
     DoctorService doctorService;
+    
 
+    // Diseases
     @PostMapping("/diseases")
     RootDto addDiseaseInfo(@RequestBody Diseases diseases) {
         RootDto res = diseasesService.addDiseaseInfo(diseases);
         return res;
     }
-
-    @GetMapping("/allAppointments")
-    RootDto getAllAppointments() {
-        RootDto res = appointmentService.allAppointments();
+    
+    // Appointments!
+    @GetMapping("/appointments/{id}")
+    RootDto fetchAppointment(@PathVariable("id") long id) {
+        RootDto res = doctorService.fetchAppointments(id);
         return res;
     }
-
-    @GetMapping("/acceptAppointment/{id}")
+    
+    @GetMapping("/accept-appointment/{id}")
     RootDto acceptAppointment(@PathVariable("id") long id) {
-        RootDto res = appointmentService.acceptAppointment(id);
+        RootDto res = doctorService.acceptAppoinment(id);
         return res;
     }
-
-    @GetMapping("/rejectAppointment/{id}")
+    
+    @GetMapping("/reject-appointment/{id}")
     RootDto rejectAppointment(@PathVariable("id") long id) {
-        RootDto res = appointmentService.rejectAppointment(id);
+        RootDto res = doctorService.rejectAppoinment(id);
         return res;
     }
     

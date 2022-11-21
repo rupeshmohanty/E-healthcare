@@ -5,7 +5,4 @@ import com.example.Ehealthcare.entity.Appointment;
 
 public interface AppointmentService {
     RootDto bookAppointment(Appointment appointment);
-    RootDto acceptAppointment(long id);
-    RootDto rejectAppointment(long id);
-    RootDto allAppointments();
 }

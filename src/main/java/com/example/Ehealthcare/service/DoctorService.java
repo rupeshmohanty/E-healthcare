@@ -10,4 +10,7 @@ public interface DoctorService {
     RootDto loginDoctor(Doctor doctor);
     RootDto writePrescription(Prescription prescription);
     RootDto addFaq(FAQ faq);
+    RootDto fetchAppointments(long id);
+    RootDto acceptAppoinment(long appId);
+    RootDto rejectAppoinment(long appId);
 }

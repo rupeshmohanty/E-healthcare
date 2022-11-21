@@ -35,4 +35,54 @@ public class Prescription {
 
     @Column(name = "medicines")
     private String medicines;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(long providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+
+	public String getSickness() {
+		return sickness;
+	}
+
+	public void setSickness(String sickness) {
+		this.sickness = sickness;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public String getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(String medicines) {
+		this.medicines = medicines;
+	}
+    
+    
 }

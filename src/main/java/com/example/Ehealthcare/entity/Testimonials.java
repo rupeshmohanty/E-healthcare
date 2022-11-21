@@ -29,4 +29,38 @@ public class Testimonials {
 
     @Column(name = "recommend")
     private String recommend;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+
+	public String getTestimonial() {
+		return testimonial;
+	}
+
+	public void setTestimonial(String testimonial) {
+		this.testimonial = testimonial;
+	}
+
+	public String getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(String recommend) {
+		this.recommend = recommend;
+	}
+    
+    
 }

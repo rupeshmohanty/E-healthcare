@@ -17,4 +17,18 @@ public class ResponseDetailsDto {
 
     @JsonProperty("responseMessage")
     private String responseMessage;
+
+	public void setResponseCode(String responseCode) {
+		this.responseCode = responseCode;
+	}
+
+	public void setResponseStatus(String responseStatus) {
+		this.responseStatus = responseStatus;
+	}
+
+	public void setResponseMessage(String responseMessage) {
+		this.responseMessage = responseMessage;
+	}
+    
+    
 }

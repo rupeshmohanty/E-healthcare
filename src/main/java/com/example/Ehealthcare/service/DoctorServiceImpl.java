@@ -1,7 +1,9 @@
 package com.example.Ehealthcare.service;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +12,11 @@ import org.springframework.util.ObjectUtils;
 import com.example.Ehealthcare.dto.DoctorDetailsDto;
 import com.example.Ehealthcare.dto.ResponseDetailsDto;
 import com.example.Ehealthcare.dto.RootDto;
+import com.example.Ehealthcare.entity.Appointment;
 import com.example.Ehealthcare.entity.Doctor;
 import com.example.Ehealthcare.entity.FAQ;
 import com.example.Ehealthcare.entity.Prescription;
+import com.example.Ehealthcare.repository.AppointmentDao;
 import com.example.Ehealthcare.repository.DoctorDao;
 import com.example.Ehealthcare.repository.FaqDao;
 import com.example.Ehealthcare.repository.PrescriptionDao;
@@ -28,6 +32,9 @@ public class DoctorServiceImpl implements DoctorService{
 
     @Autowired
     DoctorDao doctorDao;
+    
+    @Autowired
+    AppointmentDao appointmentDao;
 
     @Override
     public RootDto writePrescription(Prescription prescription) {
@@ -169,5 +176,75 @@ public class DoctorServiceImpl implements DoctorService{
 
         return dto;
     }
+
+	@Override
+	public RootDto fetchAppointments(long id) {
+		RootDto dto = new RootDto();
+		ResponseDetailsDto res = new ResponseDetailsDto();
+		List<Appointment> appointments = appointmentDao.getAppointments(id);
+		
+		if(!ObjectUtils.isEmpty(appointments)) {
+			res.setResponseCode("200");
+			res.setResponseStatus("Success");
+			res.setResponseMessage("All appoinments fetched!");
+			dto.setResponse(res);
+			dto.setAppointments(appointments);
+		} else {
+			res.setResponseCode("400");
+			res.setResponseStatus("Failed");
+			res.setResponseMessage("No appointments found!");
+			dto.setResponse(res);
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public RootDto acceptAppoinment(long appId) {
+		RootDto dto = new RootDto();
+		ResponseDetailsDto res = new ResponseDetailsDto();
+		Appointment appointment = appointmentDao.fetchAppointment(appId);
+		
+		if(!ObjectUtils.isEmpty(appointment)) {
+			appointment.setStatus("Accepted");
+			appointment = appointmentDao.save(appointment);
+			
+			res.setResponseCode("200");
+			res.setResponseStatus("Success");
+			res.setResponseMessage("Appointment accepted");
+			dto.setResponse(res);
+		} else {
+			res.setResponseCode("400");
+			res.setResponseStatus("Failed");
+			res.setResponseMessage("Unable to accept the appointment");
+			dto.setResponse(res);
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public RootDto rejectAppoinment(long appId) {
+		RootDto dto = new RootDto();
+		ResponseDetailsDto res = new ResponseDetailsDto();
+		Appointment appointment = appointmentDao.fetchAppointment(appId);
+		
+		if(!ObjectUtils.isEmpty(appointment)) {
+			appointment.setStatus("Rejected");
+			appointment = appointmentDao.save(appointment);
+			
+			res.setResponseCode("200");
+			res.setResponseStatus("Success");
+			res.setResponseMessage("Appointment rejected");
+			dto.setResponse(res);
+		} else {
+			res.setResponseCode("400");
+			res.setResponseStatus("Failed");
+			res.setResponseMessage("Unable to reject appointment");
+			dto.setResponse(res);
+		}
+		
+		return dto;
+	}
     
 }
